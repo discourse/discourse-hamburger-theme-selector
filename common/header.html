@@ -1,0 +1,43 @@
+<script type="text/discourse-plugin" version="0.8">
+var h = require('virtual-dom').h;
+
+var themeSelector = require('discourse/lib/theme-selector');
+
+api.createWidget("theme-selector", {
+
+    click(event){
+        let $target = $(event.target);
+        let key = $target.data('key');
+        themeSelector.selectDefaultTheme(key);
+        window.location.reload();
+        return false;
+    },
+
+    themeHtml(){
+        let themes = themeSelector.listThemes(this.site);
+        let currentThemeKey = themeSelector.currentThemeKey();
+        if (themes && themes.length > 1) {
+            return themes.map(theme => {
+                let name = [theme.name];
+                if (theme.id === currentThemeKey) {
+                    name.push(" *");
+                }
+                return h('li', h('a.widget-link', {attributes: {"data-key": theme.id}}, name));
+            });
+        }
+    },
+
+    html(){
+        let themeHtml = this.themeHtml();
+        if (themeHtml) {
+          return [h('ul.menu-links.columned', themeHtml), h('.clearfix'),  h('hr')];
+        }
+    }
+});
+
+api.decorateWidget('menu-links:before', (helper)=>{
+    if (helper.attrs.name === 'footer-links') {
+      return [helper.widget.attach('theme-selector')];
+    }
+});
+</script>
