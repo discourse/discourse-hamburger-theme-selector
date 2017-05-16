@@ -1,5 +1,6 @@
 <script type="text/discourse-plugin" version="0.8">
 var h = require('virtual-dom').h;
+var ajax = require('discourse/lib/ajax').ajax;
 
 var themeSelector = require('discourse/lib/theme-selector');
 
@@ -8,7 +9,18 @@ api.createWidget("theme-selector", {
     click(event){
         let $target = $(event.target);
         let key = $target.data('key');
-        themeSelector.selectDefaultTheme(key);
+        let user;
+        if (user = Discourse.__container__.lookup('current-user:main')) {
+            ajax('/u/' + user.username + ".json").then(r => {
+                themeSelector.setLocalTheme(key, r.user.user_option.theme_key_seq);
+                window.location.reload();
+            });
+            
+            return false;
+        } else {
+          themeSelector.setLocalTheme(key,0);  
+        }
+        
         window.location.reload();
         return false;
     },
