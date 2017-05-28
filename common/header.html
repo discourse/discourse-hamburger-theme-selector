@@ -32,7 +32,7 @@ api.createWidget("theme-selector", {
             return themes.map(theme => {
                 let name = [theme.name];
                 if (theme.id === currentThemeKey) {
-                    name.push(" *");
+                    name.push('\xa0' + "*");
                 }
                 return h('li', h('a.widget-link', {attributes: {"data-key": theme.id}}, name));
             });
