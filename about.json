@@ -1,5 +1,6 @@
 {
   "name": "Hamburger Theme Selector",
   "about_url": "https://meta.discourse.org/t/hamburger-theme-selector/61210",
-  "license_url": "https://github.com/SamSaffron/discourse-hamburger-theme-selector/blob/master/LICENSE"
+  "license_url": "https://github.com/SamSaffron/discourse-hamburger-theme-selector/blob/master/LICENSE",
+  "component": true
 }
