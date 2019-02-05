@@ -5,29 +5,42 @@ var ajax = require('discourse/lib/ajax').ajax;
 var themeSelector = require('discourse/lib/theme-selector');
 
 api.createWidget("theme-selector", {
+    buildKey: attrs => `theme-selector`,
+
+    defaultState() {
+        return { currentThemeId:  themeSelector.currentThemeId() };
+    },
 
     click(event){
         let $target = $(event.target);
         let id = $target.data('id');
-        let user;
-        if (user = Discourse.__container__.lookup('current-user:main')) {
-            ajax('/u/' + user.username + ".json").then(r => {
-                themeSelector.setLocalTheme([id], r.user.user_option.theme_key_seq);
-                window.location.reload();
+        let user = api.getCurrentUser();
+
+        if(user){
+            user.findDetails().then(user => {
+                seq = user.get("user_option.theme_key_seq");
+                this.setTheme(id, seq);
             });
-            
-            return false;
-        } else {
-          themeSelector.setLocalTheme([id], 0);  
-        }
+        }else{
+            this.setTheme(id);
+        };
         
-        window.location.reload();
-        return false;
+        return true;
     },
 
-    themeHtml(){
+    setTheme(themeId, seq = 0){
+        themeSelector.setLocalTheme([themeId], seq);
+        this.state.currentThemeId = themeId;
+        if(settings.immediate_reload){
+            window.location.reload();
+        }else{
+            themeSelector.previewTheme([themeId]);
+        }
+        this.scheduleRerender();
+    },
+
+    themeHtml(currentThemeId){
         let themes = themeSelector.listThemes(this.site);
-        let currentThemeId = themeSelector.currentThemeId();
         if (themes && themes.length > 1) {
             return themes.map(theme => {
                 let name = [theme.name];
@@ -39,8 +52,8 @@ api.createWidget("theme-selector", {
         }
     },
 
-    html(){
-        let themeHtml = this.themeHtml();
+    html(attrs, state){
+        let themeHtml = this.themeHtml(state.currentThemeId);
         if (themeHtml) {
           return [h('ul.menu-links.columned', themeHtml), h('.clearfix'),  h('hr')];
         }
