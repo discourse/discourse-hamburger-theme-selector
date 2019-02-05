@@ -1,0 +1,4 @@
+immediate_reload:
+  default: true
+  description:
+    en: Reload the page when changing themes (required for JS themes). If unchecked, a reload will occur on the next page navigation.
