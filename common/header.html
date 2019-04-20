@@ -24,7 +24,7 @@ api.createWidget("theme-selector", {
         }else{
             this.setTheme(id);
         };
-        
+
         return true;
     },
 
@@ -47,7 +47,7 @@ api.createWidget("theme-selector", {
                 if (theme.id === currentThemeId) {
                     name.push('\xa0' + "*");
                 }
-                return h('li', h('a.widget-link', {attributes: {"data-id": theme.id}}, name));
+                return h('li', {attributes: {"data-name": theme.name}}, h('a.widget-link', {attributes: {"data-id": theme.id}}, name));
             });
         }
     },
