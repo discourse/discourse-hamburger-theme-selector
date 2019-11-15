@@ -55,11 +55,11 @@ api.createWidget("theme-selector", {
     html(attrs, state){
         let themeHtml = this.themeHtml(state.currentThemeId);
         let sectionHeader = null;
-        const sectionHeaderText = "Theme Selector";
+        const sectionHeaderText = I18n.t(themePrefix("hamburger_menu.theme_selector"));
 
         if (!themeHtml) { return; }
 
-        if(settings.show_section_header) {
+        if (settings.show_section_header) {
             let user = api.getCurrentUser();
             let sectionHeaderLink = null;
             if (user) {
