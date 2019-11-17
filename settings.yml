@@ -2,3 +2,7 @@ immediate_reload:
   default: true
   description:
     en: Reload the page when changing themes (required for JS themes). If unchecked, a reload will occur on the next page navigation.
+show_section_header:
+  default: false
+  description:
+    en: Shows a "Theme Selector" section header in the hamburger menu above the list of themes.
