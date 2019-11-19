@@ -29,7 +29,7 @@ api.createWidget("theme-selector", {
     },
 
     setTheme(themeId, seq = 0){
-        if (id == null) { return; }
+        if (themeId == null) { return; }
         themeSelector.setLocalTheme([themeId], seq);
         this.state.currentThemeId = themeId;
         if(settings.immediate_reload){
