@@ -29,6 +29,7 @@ api.createWidget("theme-selector", {
     },
 
     setTheme(themeId, seq = 0){
+        if (themeId == null) { return; }
         themeSelector.setLocalTheme([themeId], seq);
         this.state.currentThemeId = themeId;
         if(settings.immediate_reload){
@@ -65,12 +66,12 @@ api.createWidget("theme-selector", {
             if (user) {
                 sectionHeaderLink = h('a.widget-link', { href: "/my/preferences/interface" }, sectionHeaderText);
             } else {
-                sectionHeaderLink= h('span', { style: "padding: 0.25em 0.5em" }, sectionHeaderText);
+                sectionHeaderLink= h('span', {}, sectionHeaderText);
             }
-            sectionHeader = h('li.heading', {}, sectionHeaderLink);
+            sectionHeader = h('li', { style: "width: 100%;" + (user == null ? "padding: 0.25em 0.5em;" : null) }, sectionHeaderLink);
         }
   
-        return [sectionHeader, h('ul.menu-links.columned', themeHtml), h('.clearfix'),  h('hr')];
+        return [h('ul.menu-links.columned', [sectionHeader, themeHtml]), h('.clearfix'),  h('hr')];
     }
 });
 
