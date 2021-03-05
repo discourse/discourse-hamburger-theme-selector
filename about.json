@@ -1,7 +1,7 @@
 {
   "name": "Hamburger Theme Selector",
   "component": true,
-  "license_url": "https://github.com/discourse/discourse-hamburger-theme-selector/blob/master/LICENSE",
+  "license_url": "https://github.com/discourse/discourse-hamburger-theme-selector/blob/main/LICENSE",
   "about_url": "https://meta.discourse.org/t/hamburger-theme-selector/61210",
   "authors": null,
   "theme_version": null,
