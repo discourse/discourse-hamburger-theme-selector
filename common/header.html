@@ -18,7 +18,7 @@ api.createWidget("theme-selector", {
 
         if (user) {
             user.findDetails().then(user => {
-                seq = user.get("user_option.theme_key_seq");
+                let seq = user.get("user_option.theme_key_seq");
                 this.setTheme(id, seq);
             });
         } else {
