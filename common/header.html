@@ -46,7 +46,7 @@ api.createWidget("theme-selector", {
             return themes.map(theme => {
                 let name = [theme.name];
                 if (theme.id === currentThemeId) {
-                    name.push('\xa0' + "*");
+                    name.push('\xa0' + "✔");
                 }
                 return h('li', {attributes: {"data-name": theme.name}}, h('a.widget-link', {attributes: {"data-id": theme.id}}, name));
             });
